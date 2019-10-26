@@ -33,7 +33,7 @@ function RF_AB.Buyer.getOrderEnrty(context, name, price, itemLink, icon, index, 
                         possibleBuyStack .. ' for ' .. itemConfig.itemLink)
             end
             if (totalStackSize < possibleBuyStack) then
-                local amountWantedOrig = (itemConfig['price' .. context] - totalStackSize)
+                local amountWantedOrig = (itemConfig['toBuy' .. context] - totalStackSize)
                 local amountWanted = (possibleBuyStack - totalStackSize)
 
                 local amountString = amountWantedOrig

@@ -118,7 +118,7 @@ end
 function RF_AB.Settings:getItemDescription(item_name)
     return {
         type = "description",
-        reference = "&{parent}_" .. item_name .. '_Description',
+        name_internal = "&{parent}_Description",
         text = RF_AB.savedVariables.items[item_name].itemLink,
         enableLinks = true,
         width = 'full'
@@ -126,37 +126,27 @@ function RF_AB.Settings:getItemDescription(item_name)
 end
 
 function RF_AB.Settings.getItemFieldByContext(context, item_name, field)
-    local isAvailable = RF_AB.savedVariables.items[item_name]['isAvailable' .. context]
-    if (isAvailable == nil or isAvailable == false) then
-        return {
-            type = "description",
-            reference = "&{parent}_" .. item_name .. '_' .. field,
-            width = "half",
-            text = ""
-        }
-    else
-        return RF_AB.Settings['getItemFieldByContext_' .. field](context, item_name)
-    end
+    return RF_AB.Settings['getItemFieldByContext_' .. field](context, item_name)
 end
 
 function RF_AB.Settings.getItemFieldByContext_Enable(context, item_name)
     return {
         type = "checkbox",
-        reference = "&{parent}_" .. item_name .. '_' .. context .. '_Enable',
+        name_internal = "${parent}_" .. context .. '_Enable',
         name = "enable at " .. context:lower(),
         tooltip = "enable at " .. context:lower(),
         getFunc = function() return RF_AB.savedVariables.items[item_name]['buy' .. context] end,
         setFunc = function(value) RF_AB.savedVariables.items[item_name]['buy' .. context] = value end,
         default = false,
         width = "half",
-        disabled = function() return not (RF_AB.savedVariables[context:lower() .. 'Enabled']) end
+        disabled = function() return not (RF_AB.savedVariables[context:lower() .. 'Enabled'] and RF_AB.savedVariables.items[item_name]['isAvailable' .. context]) end
     }
 end
 
 function RF_AB.Settings.getItemFieldByContext_Price(context, item_name)
     return {
         type = "slider",
-        reference = "&{parent}_" .. item_name .. '_' .. context .. '_Price',
+        name_internal = "${parent}_" .. context .. '_Price',
         name = "max price per unit (" .. context:lower() .. ")",
         min = 0,
         max = 10000,
@@ -167,14 +157,14 @@ function RF_AB.Settings.getItemFieldByContext_Price(context, item_name)
         setFunc = function(value) RF_AB.savedVariables.items[item_name]['price' .. context] = value end,
         default = 0,
         width = "half",
-        disabled = function() return not (RF_AB.savedVariables[context:lower() .. 'Enabled'] and RF_AB.savedVariables.items[item_name]['buy' .. context]) end
+        disabled = function() return not (RF_AB.savedVariables[context:lower() .. 'Enabled'] and RF_AB.savedVariables.items[item_name]['buy' .. context] and RF_AB.savedVariables.items[item_name]['isAvailable' .. context]) end
     }
 end
 
 function RF_AB.Settings.getItemFieldByContext_Amount(context, item_name)
     return {
         type = "slider",
-        reference = "&{parent}_" .. item_name .. '_' .. context .. '_Amount',
+        name_internal = "${parent}_" .. item_name .. '_' .. context .. '_Amount',
         name = "max stock (" .. context:lower() .. ")",
         min = 0,
         max = 10000,
@@ -184,7 +174,7 @@ function RF_AB.Settings.getItemFieldByContext_Amount(context, item_name)
         setFunc = function(value) RF_AB.savedVariables.items[item_name]['toBuy' .. context] = value end,
         default = 100,
         width = "half",
-        disabled = function() return not (RF_AB.savedVariables[context:lower() .. 'Enabled'] and RF_AB.savedVariables.items[item_name]['buy' .. context]) end
+        disabled = function() return not (RF_AB.savedVariables[context:lower() .. 'Enabled'] and RF_AB.savedVariables.items[item_name]['buy' .. context] and RF_AB.savedVariables.items[item_name]['isAvailable' .. context]) end
     }
 end
 

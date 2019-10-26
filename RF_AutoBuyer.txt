@@ -5,14 +5,14 @@
 ## AddOnVersion: 216
 ## SavedVariables: RF_AB_SavedVars
 ## DependsOn: AwesomeGuildStore LibAddonMenu-2.0 LibCustomMenu>=620
-## OptionalDependsOn: pChat
+## OptionalDependsOn: pChat ArkadiusTradeToolsSales TamrielTradeCentre MasterMerchant
 
-RF_AB_Main.lua
-RF_AB_Settings.lua
-RF_AB_Utils.lua
-RF_AB_Buyer.lua
-RF_AB_Buyer_Store.lua
-RF_AB_Buyer_Guild.lua
-RF_AB_ContextMenu.lua
+RF_AutoBuyer.lua
+classes/Settings.lua
+classes/Utils.lua
+classes/Buyer.lua
+classes/Buyer/Store.lua
+classes/Buyer/Guild.lua
+classes/ContextMenu.lua
 
 RF_AB_SingleSettingDialog.xml

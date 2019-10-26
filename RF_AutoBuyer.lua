@@ -1,17 +1,6 @@
 local version = '0.2.16 beta'
 local addonName = "red_Freak's AutoBuyer"
 
--- todo: better logging by debug lvls
--- todo: more categories for "other" - see alos wiki.esoui.com
--- todo: buying strategies
-
--- -- change log
--- 0.2.16: right click menu on itemLink
--- 0.2.15: buying of guild stuff
--- 0.2.14: categorize items in settings
--- 0.2.13: settings devided by context
--- 0.2.12: sorting of table
-
 -- First, we create a namespace for our addon by declaring a top-level table that will hold everything else.
 RF_AB = {
     Utils = {},

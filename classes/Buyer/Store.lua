@@ -11,7 +11,7 @@ function RF_AB.Buyer.Store.buyItems()
         RF_AB.Utils.message('Just Buy-Strategy.')
         RF_AB.Buyer.Store.justBuyStrategy(storeItems, goldToSpend)
     elseif (RF_AB.savedVariables.buyingStrategyStore == 'equal buying') then
-        RF_AB.Utils.message('Eual Buying-Strategy.')
+        RF_AB.Utils.message('Equal Buying-Strategy.')
         RF_AB.Buyer.Store.equalBuyingStrategy(storeItems, goldToSpend)
     else
         RF_AB.Utils.error('Choosen Strategy not supported.')
