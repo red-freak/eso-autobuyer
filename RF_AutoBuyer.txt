@@ -1,0 +1,18 @@
+## Title: |ccc0000red_Freak|rs AutoBuyer
+## Author: @|ccc0000red_Freak|r
+## APIVersion: 100029
+## Version: 0.2.16 beta
+## AddOnVersion: 216
+## SavedVariables: RF_AB_SavedVars
+## DependsOn: AwesomeGuildStore LibAddonMenu-2.0 LibCustomMenu>=620
+## OptionalDependsOn: pChat
+
+RF_AB_Main.lua
+RF_AB_Settings.lua
+RF_AB_Utils.lua
+RF_AB_Buyer.lua
+RF_AB_Buyer_Store.lua
+RF_AB_Buyer_Guild.lua
+RF_AB_ContextMenu.lua
+
+RF_AB_SingleSettingDialog.xml

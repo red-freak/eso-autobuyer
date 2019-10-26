@@ -1,0 +1,1 @@
+Diese Erweiterung wird von der ZeniMax Media Inc. und deren verbundenen Unternehmen weder hergestellt noch unterstützt. The Elder Scrolls® und zugehörige Logos sind registrierte Markenzeichen oder Markenzeichen der ZeniMax Media Inc. in den Vereinigten Staaten und/oder anderen Ländern. Alle Rechte vorbehalten.
