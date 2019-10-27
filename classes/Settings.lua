@@ -157,16 +157,7 @@ function RF_AB.Settings.getItemFieldByContext_Price(context, item_name)
         setFunc = function(value) RF_AB.savedVariables.items[item_name]['price' .. context] = value end,
         default = 0,
         width = "half",
-        disabled = function()
-            local state = not (RF_AB.savedVariables[context:lower() .. 'Enabled'] and RF_AB.savedVariables.items[item_name]['buy' ..
-                    context] and RF_AB.savedVariables.items[item_name]['isAvailable' .. context])
-            if (state) then
-                d('disabled called: ' .. item_name .. ' true')
-            else
-                d('disabled called: ' .. item_name .. ' false')
-            end
-            return state
-        end
+        disabled = function() return not (RF_AB.savedVariables[context:lower() .. 'Enabled'] and RF_AB.savedVariables.items[item_name]['buy' .. context] and RF_AB.savedVariables.items[item_name]['isAvailable' .. context]) end
     }
 end
 

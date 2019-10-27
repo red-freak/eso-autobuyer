@@ -22,7 +22,7 @@ function RF_AB.Buyer.getOrderEnrty(context, name, price, itemLink, icon, index, 
     local totalStackSize = RF_AB.Buyer.getItemStockByItemLink(itemLink)
     local itemConfig = RF_AB:getItemConfig(name)
 
-    if (itemConfig ~= nil and itemConfig['buy' .. context]) then
+    if (itemConfig ~= nil and itemConfig['buy' .. context] and itemConfig['price' .. context]) then
         if (price <= itemConfig['price' .. context]) then
             local possibleBuyStack = itemConfig['toBuy' .. context]
             -- adjust amount if there is a possivle best deal
@@ -34,7 +34,9 @@ function RF_AB.Buyer.getOrderEnrty(context, name, price, itemLink, icon, index, 
             end
             if (totalStackSize < possibleBuyStack) then
                 local amountWantedOrig = (itemConfig['toBuy' .. context] - totalStackSize)
+                if (amountWantedOrig < 0) then amountWantedOrig = 0 end
                 local amountWanted = (possibleBuyStack - totalStackSize)
+                if (amountWanted < 0) then amountWanted = 0 end
 
                 local amountString = amountWantedOrig
                 if (amountWanted ~= amountWantedOrig) then amountString = amountString .. 'x / ' .. amountWanted end

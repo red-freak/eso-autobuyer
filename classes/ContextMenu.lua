@@ -45,6 +45,13 @@ function RF_AB.ContextMenu.GetSalesTrackerText(itemConfig)
 end
 
 local function injectDataToLAMField(control, controlData)
+    -- common data
+    control.label:SetText(controlData.name)
+    control.data.tooltipText = controlData.tooltip
+    control.data.setFunc = controlData.setFunc
+    control.data.getFunc = controlData.getFunc
+    control.data.disabled = controlData.disabled
+
     if (controlData.type == 'checkbox') then
         -- inject our self for OnMouseUp - currently only Enabled is checkbox
         local origHandler = control:GetHandler('OnMouseUp')
@@ -55,12 +62,9 @@ local function injectDataToLAMField(control, controlData)
     elseif (controlData.type == 'slider') then
         -- nil
     end
-    -- common data
-    control.label:SetText(controlData.name)
-    control.data.tooltipText = controlData.tooltip
-    control.data.setFunc = controlData.setFunc
-    control.data.getFunc = controlData.getFunc
-    control.data.disabled = controlData.disabled
+    control:UpdateValue()
+    control:UpdateDisabled()
+
     LibAddonMenu2.util.RequestRefreshIfNeeded(control)
 end
 

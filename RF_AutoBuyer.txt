@@ -14,5 +14,3 @@ classes/Buyer.lua
 classes/Buyer/Store.lua
 classes/Buyer/Guild.lua
 classes/ContextMenu.lua
-
-RF_AB_SingleSettingDialog.xml

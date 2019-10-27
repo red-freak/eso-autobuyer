@@ -21,7 +21,7 @@ local function bestDealStrategyGetAmount(goldToSpend, pricePerUnit, stack, amoun
 
     if (amountWanted >= stack) then return stack end
 
-    RF_AB.Utils.hint('Not buying ' .. stack .. 'x' .. itemConfig.itemLink .. '@' .. pricePerUnit .. 'g, to much')
+    RF_AB.Utils.hint('Not buying ' .. stack .. 'x' .. itemConfig.itemLink .. ' @' .. pricePerUnit .. 'g, to much in inventory')
     return 0
 end
 
@@ -31,6 +31,12 @@ function RF_AB.Buyer.Guild.registerEvents()
     RF_AB.Buyer.Guild.AGS:RegisterCallback(RF_AB.Buyer.Guild.AGS.callback.SEARCH_RESULTS_RECEIVED, RF_AB.Buyer.Guild.buyItems)
     -- get the TradingHouseWrapper to directly "communicate" with AGS
     RF_AB.Buyer.Guild.AGS:RegisterCallback(RF_AB.Buyer.Guild.AGS.callback.AFTER_INITIAL_SETUP, RF_AB.Buyer.Guild.registerTradingHouseWrapper)
+    RF_AB.Buyer.Guild.AGS:RegisterCallback(RF_AB.Buyer.Guild.AGS.callback.ITEM_PURCHASED, function(itemData)
+        -- set it bought
+        itemData.purchased = true
+        -- refresh search result
+        RF_AB.Buyer.Guild.TradingHouseWrapper.searchTab.searchResultList:RefreshVisible()
+    end)
 
     EVENT_MANAGER:RegisterForEvent("AB_OpenGuildStore", EVENT_CLOSE_TRADING_HOUSE, RF_AB.Buyer.Guild.StoreClosed)
 end
@@ -95,15 +101,15 @@ function RF_AB.Buyer.Guild.buy(order, goldToSpend, guildId)
             if (goldToSpend >= orderItem.stack * orderItem.price) then
                 RF_AB.Utils.success('Buying ' .. orderItem.stack .. 'x ' .. orderItem.itemLink .. ' @' .. RF_AB.Utils:MoneyString(orderItem.price))
                 -- prepare data for AGS
-                local itemData = RF_AB.Buyer.Guild.TradingHouseWrapper.itemDatabase:TryGetItemDataInCurrentGuildByUniqueId(orderItem.uniqueId)
+                local itemData, _ = RF_AB.Buyer.Guild.TradingHouseWrapper.itemDatabase:TryGetItemDataInCurrentGuildByUniqueId(orderItem.uniqueId)
                 -- call AGS to handle purchase
                 local purchaseActivity = RF_AB.Buyer.Guild.TradingHouseWrapper.activityManager:PurchaseItem(guildId, itemData)
-                purchaseActivity.pendingPromise:Then(function()
-                    -- set it bought
-                    itemData.purchased = true
-                    -- refresh search result
-                    RF_AB.Buyer.Guild.TradingHouseWrapper.searchTab.searchResultList:RefreshVisible()
-                end)
+                --                purchaseActivity.pendingPromise:Then(function()
+                --                    -- set it bought
+                --                    itemData.purchased = true
+                --                    -- refresh search result
+                --                    RF_AB.Buyer.Guild.TradingHouseWrapper.searchTab.searchResultList:RefreshVisible()
+                --                end)
             else
                 RF_AB.Utils.error('Not buying ' .. orderItem.itemLink .. ' no money left.')
             end
