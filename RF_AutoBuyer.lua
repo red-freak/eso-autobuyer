@@ -1,4 +1,4 @@
-local version = '0.2.16 beta'
+local version = '0.2.17 beta'
 local addonName = "red_Freak's AutoBuyer"
 
 -- First, we create a namespace for our addon by declaring a top-level table that will hold everything else.

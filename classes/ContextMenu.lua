@@ -26,13 +26,13 @@ local function RF_AB_SettingDialog_CloseButton_OnClicked()
 end
 
 local RF_AB_SettingDialog_Fields = {}
+local currentConfig
 
 local function RF_AB_SettingDialog_itemField_OnValueChanged(self, value, reason)
-    d(value)
     local field_name_price = self:GetName():gsub('_Enable', '_Price')
-    LibAddonMenu2.util.RequestRefreshIfNeeded(RF_AB_SettingDialog_Fields[field_name_price])
     local field_name_amount = self:GetName():gsub('_Enable', '_Amount')
-    LibAddonMenu2.util.RequestRefreshIfNeeded(RF_AB_SettingDialog_Fields[field_name_amount])
+    RF_AB_SettingDialog_Fields[field_name_price]:UpdateDisabled()
+    RF_AB_SettingDialog_Fields[field_name_amount]:UpdateDisabled()
 end
 
 function RF_AB.ContextMenu.GetDescriptionText(itemConfig)
@@ -49,7 +49,7 @@ local function injectDataToLAMField(control, controlData)
         -- inject our self for OnMouseUp - currently only Enabled is checkbox
         local origHandler = control:GetHandler('OnMouseUp')
         control:SetHandler('OnMouseUp', function(self, value, eventReason)
-            origHandler(self)
+            origHandler(control)
             RF_AB_SettingDialog_itemField_OnValueChanged(self, value, eventReason)
         end)
     elseif (controlData.type == 'slider') then
@@ -64,7 +64,7 @@ local function injectDataToLAMField(control, controlData)
     LibAddonMenu2.util.RequestRefreshIfNeeded(control)
 end
 
-local function showSettingsDialog(itemConfig)
+function RF_AB.ContextMenu.showSettingsDialog(itemConfig)
     local wm = WINDOW_MANAGER
     local tmp
     -- main window
@@ -149,7 +149,7 @@ local function showSettingsDialog(itemConfig)
 
         -- some markup
         control:SetDimensions(280, 40)
-        local row = math.floor(i / 2)
+        local row = math.ceil(i / 2)
         local even = (i % 2 == 0)
         if (not (even)) then
             control:SetAnchor(TOPLEFT, dialog, TOPLEFT, 10, (row - 1) * 60 + 130)
@@ -163,11 +163,11 @@ end
 function RF_AB.ContextMenu:Callback(name)
     local itemConfig = RF_AB:getItemConfig(name)
     if (itemConfig == nil) then return end
+    currentConfig = itemConfig
 
     -- show tooltip
     RF_AB.ContextMenu.ToolTipHandler = ZO_PopupTooltip_SetLink(itemConfig.itemLink)
-    showSettingsDialog(itemConfig)
+    RF_AB.ContextMenu.showSettingsDialog(itemConfig)
 end
-
 
 RF_AB.ContextMenu.ToolTipHandler = nil

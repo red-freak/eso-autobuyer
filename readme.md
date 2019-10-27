@@ -6,7 +6,6 @@ This Add-on is not created by, affiliated with or sponsored by ZeniMax Media Inc
 This Addon is neither by the authors of AwsomeGuildStore nor is it supported by them.
 
 # known bugs
-the fields are displayed to high for store item settings
 
 # ToDo
 - Add support for MM/TTC/ATT in description
@@ -18,8 +17,17 @@ the fields are displayed to high for store item settings
 - todo: buying strategies for guild
 
 # ChangeLog
-- 0.2.16: right click menu on itemLink
-- 0.2.15: buying of guild stuff
-- 0.2.14: categorize items in settings
-- 0.2.13: settings devided by context
-- 0.2.12: sorting of table
+## 0.2.X - ALPHA-Version
+### 0.2.17
+- FIX: the fields are displayed to high for store item settings
+- FIX: Enable/Disable in dialog
+### 0.2.16:
+- right click menu on itemLink
+### 0.2.15:
+- buying of guild stuff
+### 0.2.14:
+- categorize items in settings
+### 0.2.13:
+- settings devided by context
+### 0.2.12:
+- sorting of table

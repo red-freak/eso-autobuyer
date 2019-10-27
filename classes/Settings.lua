@@ -157,14 +157,23 @@ function RF_AB.Settings.getItemFieldByContext_Price(context, item_name)
         setFunc = function(value) RF_AB.savedVariables.items[item_name]['price' .. context] = value end,
         default = 0,
         width = "half",
-        disabled = function() return not (RF_AB.savedVariables[context:lower() .. 'Enabled'] and RF_AB.savedVariables.items[item_name]['buy' .. context] and RF_AB.savedVariables.items[item_name]['isAvailable' .. context]) end
+        disabled = function()
+            local state = not (RF_AB.savedVariables[context:lower() .. 'Enabled'] and RF_AB.savedVariables.items[item_name]['buy' ..
+                    context] and RF_AB.savedVariables.items[item_name]['isAvailable' .. context])
+            if (state) then
+                d('disabled called: ' .. item_name .. ' true')
+            else
+                d('disabled called: ' .. item_name .. ' false')
+            end
+            return state
+        end
     }
 end
 
 function RF_AB.Settings.getItemFieldByContext_Amount(context, item_name)
     return {
         type = "slider",
-        name_internal = "${parent}_" .. item_name .. '_' .. context .. '_Amount',
+        name_internal = "${parent}_" .. context .. '_Amount',
         name = "max stock (" .. context:lower() .. ")",
         min = 0,
         max = 10000,
